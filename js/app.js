@@ -1,9 +1,9 @@
 ﻿(function () {
   'use strict';
 
-  var margin = { top: 50, right: 50, bottom: 50, left: 50 },
+  var margin = { top: 20, right: 40, bottom: 250, left: 30 },
     width = 1800 - margin.left - margin.right,
-    height = 750 - margin.top - margin.bottom;
+    height = 900 - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);
@@ -32,7 +32,13 @@
     chart.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+    .selectAll("text")
+      .attr("y", 15)
+      .attr("x", 5)
+      .attr("dy", ".35em")
+      .attr("transform", "rotate(45)")
+      .style("text-anchor", "start");
 
     chart.append("g")
       .attr("class", "y axis")
