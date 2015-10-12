@@ -27,7 +27,7 @@
 
   d3.json("imdb_top_50.json", function (error, data) {
     x.domain(data.map(function (d) { return d.title; }));
-    y.domain([0, 10]); // d3.max(data, function (d) { return d.rating; })
+    y.domain([8, d3.max(data, function (d) { return d.rating; })]);
 
     chart.append("g")
       .attr("class", "x axis")
