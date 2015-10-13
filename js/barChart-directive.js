@@ -6,7 +6,10 @@
       return {
         restrict: 'E',
         scope: {
-          data: '='
+          data: '=',
+          domainField: '=',
+          rangeField: '=',
+          barTextField: '=',
         },
         link: function (scope, element, attrs) {
           var margin = { top: 20, right: 10, bottom: 250, left: 60 },
@@ -34,12 +37,12 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
           var render = function (data) {
-            var xField = 'rank';
-            var yField = 'rating';
-            var barTextField = 'title';
+            var domainField = scope.domainField || 'name';
+            var rangeField = scope.rangeField || 'value';
+            var barTextField = scope.barTextField || '';
 
-            x.domain(data.map(function (d) { return d[xField]; }));
-            y.domain([8, d3.max(data, function (d) { return d[yField]; })]);
+            x.domain(data.map(function (d) { return d[domainField]; }));
+            y.domain([8, d3.max(data, function (d) { return d[rangeField]; })]);
 
             // x-axis
             chart.append("g")
@@ -49,7 +52,7 @@
             chart.append("text")
               .attr("transform", "translate(" + width / 2 + ", " + (height + 40) + ")")
               .style("text-anchor", "middle")
-              .text("Rank");
+              .text(domainField);
 
             // y-axis
             chart.append("g")
@@ -61,7 +64,7 @@
               .attr("x", 0 - height / 2)
               .attr("dy", ".71em")
               .style("text-anchor", "middle")
-              .text("Rating");
+              .text(rangeField);
 
             var bar = chart.selectAll(".bar")
                 .data(data)
@@ -70,15 +73,15 @@
             // create and place bars
             bar.append("rect")
               .attr("class", "bar")
-              .attr("x", function (d) { return x(d[xField]); })
-              .attr("y", function (d) { return y(d[yField]); })
-              .attr("height", function (d) { return height - y(d[yField]); })
+              .attr("x", function (d) { return x(d[domainField]); })
+              .attr("y", function (d) { return y(d[rangeField]); })
+              .attr("height", function (d) { return height - y(d[rangeField]); })
               .attr("width", x.rangeBand());
 
             // insert text into bars
             bar.append("text")
               .attr("x", function (d) { return -height; })
-              .attr("y", function (d) { return x(d[xField]) + x.rangeBand() / 2; })
+              .attr("y", function (d) { return x(d[domainField]) + x.rangeBand() / 2; })
               .attr("transform", "rotate(-90)")
               .style("fill", "white")
               .attr("dx", ".75em")
