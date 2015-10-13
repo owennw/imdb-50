@@ -20,3 +20,9 @@
 .x.axis path {
   display: none;
 }
+
+form {
+  position: absolute;
+  top: 100px;
+  right: 300px;
+}
