@@ -34,8 +34,12 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
           var render = function (data) {
-            x.domain(data.map(function (d) { return d.rank; }));
-            y.domain([8, d3.max(data, function (d) { return d.rating; })]);
+            var xField = 'rank';
+            var yField = 'rating';
+            var barTextField = 'title';
+
+            x.domain(data.map(function (d) { return d[xField]; }));
+            y.domain([8, d3.max(data, function (d) { return d[yField]; })]);
 
             // x-axis
             chart.append("g")
@@ -54,7 +58,7 @@
             .append("text")
               .attr("transform", "rotate(-90)")
               .attr("y", 10 - margin.left)
-              .attr("x", 0 - (height / 2))
+              .attr("x", 0 - height / 2)
               .attr("dy", ".71em")
               .style("text-anchor", "middle")
               .text("Rating");
@@ -66,20 +70,20 @@
             // create and place bars
             bar.append("rect")
               .attr("class", "bar")
-              .attr("x", function (d) { return x(d.rank); })
-              .attr("y", function (d) { return y(d.rating); })
-              .attr("height", function (d) { return height - y(d.rating); })
+              .attr("x", function (d) { return x(d[xField]); })
+              .attr("y", function (d) { return y(d[yField]); })
+              .attr("height", function (d) { return height - y(d[yField]); })
               .attr("width", x.rangeBand());
 
             // insert text into bars
             bar.append("text")
               .attr("x", function (d) { return -height; })
-              .attr("y", function (d) { return x(d.rank) + x.rangeBand() / 2; })
+              .attr("y", function (d) { return x(d[xField]) + x.rangeBand() / 2; })
               .attr("transform", "rotate(-90)")
               .style("fill", "white")
               .attr("dx", ".75em")
               .attr("dy", ".3em")
-              .text(function (d) { return d.title; });
+              .text(function (d) { return d[barTextField]; });
           };
 
           scope.$watch('data', function () {
