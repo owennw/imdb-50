@@ -6,8 +6,10 @@
       return {
         restrict: 'E',
         controller: 'Top50Ctrl',
+        scope: {
+          data: '='
+        },
         link: function (scope, element, attrs) {
-
           var margin = { top: 20, right: 40, bottom: 250, left: 30 },
           width = 1800 - margin.left - margin.right,
           height = 900 - margin.top - margin.bottom;
@@ -32,7 +34,7 @@
           .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-          d3.json("imdb_top_50.json", function (error, data) {
+          var render = function (data) {
             x.domain(data.map(function (d) { return d.title; }));
             y.domain([8, d3.max(data, function (d) { return d.rating; })]);
 
@@ -65,6 +67,10 @@
                 .attr("y", function (d) { return y(d.rating); })
                 .attr("height", function (d) { return height - y(d.rating); })
                 .attr("width", x.rangeBand());
+          };
+
+          scope.$watch('data', function () {
+            render(scope.data);
           });
         }
       };

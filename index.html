@@ -12,7 +12,7 @@
         }
     </style>
 </head>
-<body ng-cloak ng-controller="Top50Ctrl">
+<body ng-cloak ng-controller="Top50Ctrl as top50Ctrl">
     <nav class="navbar navbar-inverse navbar-static-top">
         <div class="navbar-header">
             <a class="navbar-brand" href="#/">IMDB Top 20 Visualiser</a>
@@ -22,7 +22,7 @@
     <form>
         <div>Sort by: <input type="radio" value="Rating" checked /> Rating</div>
     </form>
-    <top50-bar-chart></top50-bar-chart>
+    <top50-bar-chart data="top50Ctrl.data"></top50-bar-chart>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
