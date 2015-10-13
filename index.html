@@ -6,9 +6,13 @@
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
 </head>
-<body>
-
+<body ng-cloak ng-controller="Top50Ctrl">
     <nav class="navbar navbar-inverse navbar-static-top">
         <div class="navbar-header">
             <a class="navbar-brand" href="#/">IMDB Top 20 Visualiser</a>
@@ -18,12 +22,13 @@
     <form>
         <div>Sort by: <input type="radio" value="Rating" checked /> Rating</div>
     </form>
-    <svg class="chart"></svg>
+    <top50-bar-chart></top50-bar-chart>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/top50-controller.js"></script>
     <script src="js/top50Data-service.js"></script>
+    <script src="js/barChart-directive.js"></script>
 </body>
 </html>
