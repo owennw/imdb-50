@@ -5,16 +5,9 @@
     .controller('Top50Ctrl', ['top50DataService', function (top50DataService) {
       var self = this;
 
-      self.sortValue = '';
-      self.sortings = [
-        {
-          value: 'Rank',
-          checked: true
-        },
-        {
-          value: 'Release Year',
-          checked: false
-        }];
+      var rank = { value: 'Rank', checked: true };
+      var releaseYear = { value: 'Release Year', checked: false };
+      self.sortings = [rank, releaseYear];
 
       self.data = [];
       top50DataService.getData()

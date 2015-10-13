@@ -6,11 +6,10 @@
       return {
         restrict: 'E',
         scope: {
-          data: '=',
-          sort: '&'
+          data: '='
         },
         link: function (scope, element, attrs) {
-          var margin = { top: 20, right: 40, bottom: 250, left: 30 },
+          var margin = { top: 20, right: 10, bottom: 250, left: 60 },
           width = 1800 - margin.left - margin.right,
           height = 900 - margin.top - margin.bottom;
 
@@ -35,27 +34,18 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
           var render = function (data) {
-            var xValue = function (d) {
-              return d.rank;
-            };
-
-            var yValue = function (d) {
-              return d.rating;
-            };
-
-            x.domain(data.map(function (d) { return xValue(d); }));
-            y.domain([8, d3.max(data, function (d) { return yValue(d); })]);
+            x.domain(data.map(function (d) { return d.rank; }));
+            y.domain([8, d3.max(data, function (d) { return d.rating; })]);
 
             // x-axis
             chart.append("g")
               .attr("class", "x axis")
               .attr("transform", "translate(0," + height + ")")
-              .call(xAxis)
-            .append("text")
-              .attr("y", 15)
-              .attr("x", 0)
-              .attr("dy", ".35em")
-              .style("text-anchor", "middle");
+              .call(xAxis);
+            chart.append("text")
+              .attr("transform", "translate(" + width / 2 + ", " + (height + 40) + ")")
+              .style("text-anchor", "middle")
+              .text("Rank");
 
             // y-axis
             chart.append("g")
@@ -63,7 +53,8 @@
               .call(yAxis)
             .append("text")
               .attr("transform", "rotate(-90)")
-              .attr("y", 6)
+              .attr("y", 10 - margin.left)
+              .attr("x", 0 - (height / 2))
               .attr("dy", ".71em")
               .style("text-anchor", "middle")
               .text("Rating");
@@ -75,15 +66,15 @@
             // create and place bars
             bar.append("rect")
               .attr("class", "bar")
-              .attr("x", function (d) { return x(xValue(d)); })
-              .attr("y", function (d) { return y(yValue(d)); })
-              .attr("height", function (d) { return height - y(yValue(d)); })
+              .attr("x", function (d) { return x(d.rank); })
+              .attr("y", function (d) { return y(d.rating); })
+              .attr("height", function (d) { return height - y(d.rating); })
               .attr("width", x.rangeBand());
 
             // insert text into bars
             bar.append("text")
               .attr("x", function (d) { return -height; })
-              .attr("y", function (d) { return x(xValue(d)) + x.rangeBand() / 2; })
+              .attr("y", function (d) { return x(d.rank) + x.rangeBand() / 2; })
               .attr("transform", "rotate(-90)")
               .style("fill", "white")
               .attr("dx", ".75em")
