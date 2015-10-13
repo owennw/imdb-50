@@ -19,9 +19,11 @@
         </div>
     </nav>
 
-    <form>
-        <div>Sort by: <input type="radio" value="Rating" checked /> Rating</div>
-    </form>
+    <div class="container-fluid selection">
+        <span>Sort by:&nbsp;</span>
+        <label class="radio-inline"><input type="radio" name="optradio" checked>Rank</label>
+        <label class="radio-inline"><input type="radio" name="optradio">Rating</label>
+    </div>
     <top50-bar-chart data="top50Ctrl.data"></top50-bar-chart>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>

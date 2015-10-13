@@ -42,7 +42,7 @@
               .attr("class", "x axis")
               .attr("transform", "translate(0," + height + ")")
               .call(xAxis)
-            .selectAll("text")
+            .append("text")
               .attr("y", 15)
               .attr("x", 0)
               .attr("dy", ".35em")
@@ -63,6 +63,7 @@
                 .data(data)
               .enter();
             
+            // create and place bars
             bar.append("rect")
               .attr("class", "bar")
               .attr("x", function (d) { return x(d.rank); })
@@ -70,6 +71,7 @@
               .attr("height", function (d) { return height - y(d.rating); })
               .attr("width", x.rangeBand());
 
+            // insert text into bars
             bar.append("text")
               .attr("x", function (d) { return -height; })
               .attr("y", function (d) { return x(d.rank) + x.rangeBand() / 2; })

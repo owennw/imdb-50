@@ -21,7 +21,7 @@
   display: none;
 }
 
-form {
+.selection {
   position: absolute;
   top: 100px;
   right: 300px;
