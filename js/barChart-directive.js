@@ -5,7 +5,6 @@
     .directive('top50BarChart', function () {
       return {
         restrict: 'E',
-        controller: 'Top50Ctrl',
         scope: {
           data: '='
         },
@@ -35,20 +34,21 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
           var render = function (data) {
-            x.domain(data.map(function (d) { return d.title; }));
+            x.domain(data.map(function (d) { return d.rank; }));
             y.domain([8, d3.max(data, function (d) { return d.rating; })]);
 
+            // x-axis
             chart.append("g")
               .attr("class", "x axis")
               .attr("transform", "translate(0," + height + ")")
               .call(xAxis)
             .selectAll("text")
               .attr("y", 15)
-              .attr("x", 5)
+              .attr("x", 0)
               .attr("dy", ".35em")
-              .attr("transform", "rotate(45)")
-              .style("text-anchor", "start");
+              .style("text-anchor", "middle");
 
+            // y-axis
             chart.append("g")
               .attr("class", "y axis")
               .call(yAxis)
@@ -56,17 +56,28 @@
               .attr("transform", "rotate(-90)")
               .attr("y", 6)
               .attr("dy", ".71em")
-              .style("text-anchor", "end")
+              .style("text-anchor", "middle")
               .text("Rating");
 
-            chart.selectAll(".bar")
+            var bar = chart.selectAll(".bar")
                 .data(data)
-              .enter().append("rect")
-                .attr("class", "bar")
-                .attr("x", function (d) { return x(d.title); })
-                .attr("y", function (d) { return y(d.rating); })
-                .attr("height", function (d) { return height - y(d.rating); })
-                .attr("width", x.rangeBand());
+              .enter();
+            
+            bar.append("rect")
+              .attr("class", "bar")
+              .attr("x", function (d) { return x(d.rank); })
+              .attr("y", function (d) { return y(d.rating); })
+              .attr("height", function (d) { return height - y(d.rating); })
+              .attr("width", x.rangeBand());
+
+            bar.append("text")
+              .attr("x", function (d) { return -height; })
+              .attr("y", function (d) { return x(d.rank) + x.rangeBand() / 2; })
+              .attr("transform", "rotate(-90)")
+              .style("fill", "white")
+              .attr("dx", ".75em")
+              .attr("dy", ".3em")
+              .text(function (d) { return d.title; });
           };
 
           scope.$watch('data', function () {
