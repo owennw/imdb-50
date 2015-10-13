@@ -19,10 +19,18 @@
         </div>
     </nav>
 
-    <div class="container-fluid selection">
-        <span>Sort by:&nbsp;</span>
-        <label class="radio-inline"><input type="radio" name="optradio" checked>Rank</label>
-        <label class="radio-inline"><input type="radio" name="optradio">Rating</label>
+    <div class="container-fluid selection" style="width:300px;">
+        <div class="col-md-4">
+            Sort by:
+        </div>
+        <div class="col-md-8">
+            <div ng-repeat="sorting in top50Ctrl.sortings">
+                <label class="radio-inline">
+                    <input type="radio" name="optradio" ng-checked="{{sorting.checked}}">
+                    {{sorting.value}}
+                </label>
+            </div>
+        </div>
     </div>
     <top50-bar-chart data="top50Ctrl.data"></top50-bar-chart>
 
