@@ -5,6 +5,7 @@
     .controller('Top50Ctrl', ['top50DataService', function (top50DataService) {
       var self = this;
 
+      self.sortValue = '';
       self.sortings = [
         {
           value: 'Rank',

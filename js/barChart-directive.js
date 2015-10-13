@@ -6,7 +6,8 @@
       return {
         restrict: 'E',
         scope: {
-          data: '='
+          data: '=',
+          sort: '&'
         },
         link: function (scope, element, attrs) {
           var margin = { top: 20, right: 40, bottom: 250, left: 30 },
@@ -34,8 +35,16 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
           var render = function (data) {
-            x.domain(data.map(function (d) { return d.rank; }));
-            y.domain([8, d3.max(data, function (d) { return d.rating; })]);
+            var xValue = function (d) {
+              return d.rank;
+            };
+
+            var yValue = function (d) {
+              return d.rating;
+            };
+
+            x.domain(data.map(function (d) { return xValue(d); }));
+            y.domain([8, d3.max(data, function (d) { return yValue(d); })]);
 
             // x-axis
             chart.append("g")
@@ -66,15 +75,15 @@
             // create and place bars
             bar.append("rect")
               .attr("class", "bar")
-              .attr("x", function (d) { return x(d.rank); })
-              .attr("y", function (d) { return y(d.rating); })
-              .attr("height", function (d) { return height - y(d.rating); })
+              .attr("x", function (d) { return x(xValue(d)); })
+              .attr("y", function (d) { return y(yValue(d)); })
+              .attr("height", function (d) { return height - y(yValue(d)); })
               .attr("width", x.rangeBand());
 
             // insert text into bars
             bar.append("text")
               .attr("x", function (d) { return -height; })
-              .attr("y", function (d) { return x(d.rank) + x.rangeBand() / 2; })
+              .attr("y", function (d) { return x(xValue(d)) + x.rangeBand() / 2; })
               .attr("transform", "rotate(-90)")
               .style("fill", "white")
               .attr("dx", ".75em")

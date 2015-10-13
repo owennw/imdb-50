@@ -26,13 +26,13 @@
         <div class="col-md-8">
             <div ng-repeat="sorting in top50Ctrl.sortings">
                 <label class="radio-inline">
-                    <input type="radio" name="optradio" ng-checked="{{sorting.checked}}">
+                    <input type="radio" name="optradio" ng-model="top50Ctrl.sortValue" ng-checked="{{sorting.checked}}">
                     {{sorting.value}}
                 </label>
             </div>
         </div>
     </div>
-    <top50-bar-chart data="top50Ctrl.data"></top50-bar-chart>
+    <top50-bar-chart data="top50Ctrl.data" sort="top50Ctrl.sortValue"></top50-bar-chart>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
