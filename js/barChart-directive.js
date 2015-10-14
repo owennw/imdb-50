@@ -44,31 +44,44 @@
 
             // x-axis
             chart.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + height + ")");
-            chart.append("text")
-              .attr("transform", "translate(" + width / 2 + ", " + (height + 40) + ")")
+              .attr({
+                class: "x axis",
+                transform: "translate(0," + height + ")"
+              })
+            .append("text")
+              .attr({
+                class: "label",
+                x: width / 2,
+                y: 40
+              })
               .style("text-anchor", "middle")
-              .text(domainField);
+              .style("font-size", "15px");
             chart.select("g.x.axis")
               .transition()
               .duration(transitionDuration)
-              .call(xAxis);
+              .call(xAxis)
+              .select("text.label")
+              .text(domainField);
 
             // y-axis
             chart.append("g")
               .attr("class", "y axis")
             .append("text")
-              .attr("transform", "rotate(-90)")
-              .attr("y", 10 - margin.left)
-              .attr("x", 0 - height / 2)
-              .attr("dy", ".71em")
+              .attr({
+                class: "label",
+                transform: "rotate(-90)",
+                x: 0 - height / 2,
+                y: 10 - margin.left,
+                dy: ".71em"
+              })
               .style("text-anchor", "middle")
-              .text(rangeField);
+              .style("font-size", "15px");
             chart.select("g.y.axis")
               .transition()
               .duration(transitionDuration)
-              .call(yAxis);
+              .call(yAxis)
+              .select("text.label")
+              .text(rangeField);
 
             var allBars = chart.selectAll("rect.bar")
                 .data(data);
