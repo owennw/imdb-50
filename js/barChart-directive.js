@@ -45,7 +45,7 @@
 
             var yMax = function () {
               return d3.max(data, function (d) { return d[rangeField]; });
-            }
+            };
 
             x.domain(data.map(function (d) { return d[domainField]; }));
             y.domain([yMin() * 0.99, yMax()]);
