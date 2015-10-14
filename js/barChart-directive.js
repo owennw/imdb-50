@@ -14,7 +14,7 @@
         link: function (scope, element, attrs) {
           var transitionDuration = 300;
 
-          var margin = { top: 20, right: 10, bottom: 250, left: 60 },
+          var margin = { top: 20, right: 10, bottom: 250, left: 80 },
           width = 1800 - margin.left - margin.right,
           height = 900 - margin.top - margin.bottom;
 
@@ -39,8 +39,16 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
           var render = function (data, domainField, rangeField, barTextField) {
+            var yMin = function () {
+              return d3.min(data, function (d) { return d[rangeField]; });
+            };
+
+            var yMax = function () {
+              return d3.max(data, function (d) { return d[rangeField]; });
+            }
+
             x.domain(data.map(function (d) { return d[domainField]; }));
-            y.domain([8, d3.max(data, function (d) { return d[rangeField]; })]);
+            y.domain([yMin() * 0.99, yMax()]);
 
             // x-axis
             chart.append("g")
@@ -135,7 +143,7 @@
             renderHelper(scope);
           }, true);
 
-          scope.$watch('domainField', function () {
+          scope.$watch('rangeField', function () {
             renderHelper(scope);
           });
         }
