@@ -26,8 +26,8 @@
         <div class="col-md-8">
             <div ng-repeat="sorting in top50Ctrl.sortings">
                 <label class="radio-inline">
-                    <input type="radio" name="optradio" ng-checked="{{sorting.checked}}">
-                    {{sorting.value}}
+                    <input type="radio" name="optradio" ng-model="top50Ctrl.sortKey" ng-value="{{sorting.id}}" ng-change="top50Ctrl.sortData()">
+                    {{sorting.name}}
                 </label>
             </div>
         </div>
